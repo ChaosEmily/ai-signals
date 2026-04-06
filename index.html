@@ -822,6 +822,28 @@
       }
     }
 
+    /* CONTACT BUTTON */
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 700;
+    }
+
+    .contact-btn:hover {
+      background-color: var(--accent);
+      color: var(--paper);
+    }
+
     /* BACK TO TOP */
     #back-to-top {
       position: fixed;
@@ -1373,6 +1395,9 @@
   </div>
 
   <footer>
+    <div style="margin-bottom: 2.5rem;">
+      <a href="mailto:justicemily@gmail.com" class="contact-btn">聯繫我 · justicemily@gmail.com</a>
+    </div>
     <p>求職田野筆記 × Vault 知識融合系統 · 深度合成</p>
     <p>來源筆記：4篇 · 框架：2維度 × 5訊號 · 2026-04-06</p>
     <p>適用對象：非工程師職能的雇主判斷 × 求職者自我準備</p>
