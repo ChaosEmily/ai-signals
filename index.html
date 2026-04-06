@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雇主如何判斷員工能否與AI協作</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f2ea;
+    --accent: #c8401a;
+    --accent2: #1a6bc8;
+    --muted: #6b6560;
+    --rule: #d4cfc5;
+    --green: #1a7c4a;
+    --red: #c8401a;
+    --highlight: #ffd84a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* MASTHEAD */
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 1.2rem 0 0.8rem;
+    text-align: center;
+    position: relative;
+  }
+  .masthead-top {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 0 2rem 0.8rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .site-name {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 900;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  /* HERO */
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+  }
+  .kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .kicker::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 2px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+    position: relative;
+  }
+  h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--highlight);
+    z-index: -1;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.7rem 0;
+  }
+
+  /* LEDE BOX */
+  .lede-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.8rem 2rem;
+    margin: 0 auto 3rem;
+    max-width: 860px;
+    position: relative;
+  }
+  .lede-box::before {
+    content: '⚡';
+    position: absolute;
+    top: -1.1rem;
+    left: 2rem;
+    background: var(--highlight);
+    color: var(--ink);
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .lede-box p {
+    font-size: 1rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .lede-box strong {
+    color: var(--highlight);
+    font-weight: 500;
+  }
+
+  /* LAYOUT */
+  .layout {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 2rem;
+  }
+  .section.animate {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.animate.visible { opacity: 1; transform: none; }
+
+  /* INTRO */
+  .intro-text {
+    font-size: 1.05rem;
+    color: var(--muted);
+    border-left: 3px solid var(--accent2);
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .intro-text blockquote {
+    font-family: 'Noto Serif TC', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink);
+    margin: 1.5rem 0;
+    padding: 1.2rem 1.5rem;
+    background: white;
+    border-left: 4px solid var(--accent);
+    box-shadow: 3px 3px 0 var(--rule);
+  }
+
+  /* DIMENSION FRAME */
+  .dimension-box {
+    background: white;
+    border: 1.5px solid var(--ink);
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .dimension-box h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .dim-item {
+    padding: 1rem 1.2rem;
+    background: var(--paper);
+    border-top: 3px solid var(--accent);
+  }
+  .dim-item h4 {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+  }
+  .dim-item p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* SIGNAL CARDS */
+  .signal-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .signal-num span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--accent);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  h2 + .section-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .observe-box {
+    background: #f0eee8;
+    border-left: 4px solid var(--accent2);
+    padding: 1rem 1.3rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+  }
+  .observe-box strong {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+  .observe-box p {
+    font-family: 'Noto Serif TC', serif;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+  }
+  .compare-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--ink);
+  }
+  .compare-table th:first-child { color: var(--red); border-top: 3px solid var(--red); }
+  .compare-table th:last-child { color: var(--green); border-top: 3px solid var(--green); }
+  .compare-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { background: #fff5f3; color: #7a3020; }
+  .compare-table td:last-child { background: #f3fff8; color: #1a4f32; }
+
+  /* WHY BOX */
+  .why-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.5rem 1.8rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .why-box::before {
+    content: 'WHY';
+    position: absolute;
+    top: -0.7rem;
+    right: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    background: var(--highlight);
+    color: var(--ink);
+    padding: 0.15rem 0.5rem;
+    font-weight: 700;
+  }
+  .why-box p { font-size: 0.88rem; line-height: 1.8; }
+  .why-box p + p { margin-top: 0.8rem; }
+  .why-box strong { color: var(--highlight); }
+  .why-box em {
+    font-style: normal;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.95rem;
+    display: block;
+    padding: 0.8rem 1rem;
+    border-left: 3px solid var(--highlight);
+    margin: 1rem 0;
+    color: #e8e3d8;
+  }
+
+  /* DIVIDER */
+  .divider {
+    text-align: center;
+    color: var(--muted);
+    letter-spacing: 0.5em;
+    font-size: 0.8rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: var(--rule);
+  }
+  .divider::before { left: 0; }
+  .divider::after { right: 0; }
+
+  /* ORG SECTION */
+  .org-section {
+    background: white;
+    border: 1.5px solid var(--ink);
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .org-section h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .org-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--accent2);
+    color: white;
+    padding: 0.15rem 0.4rem;
+  }
+
+  /* QUICK REF */
+  .quick-ref {
+    background: #0f0e0c;
+    color: #f5f2ea;
+    padding: 2.5rem;
+    margin: 3rem 0;
+  }
+  .quick-ref h2 {
+    color: var(--highlight);
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+  .quick-ref table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-bottom: 2rem;
+  }
+  .quick-ref th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--highlight);
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid #333;
+    text-align: left;
+  }
+  .quick-ref td {
+    padding: 0.8rem;
+    border-bottom: 1px solid #222;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .quick-ref td:first-child { color: #aaa; font-size: 0.8rem; }
+  .quick-ref td:last-child { color: #e0dbd0; }
+  .quick-ref .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 2rem 0 1rem;
+    color: #666;
+  }
+
+  /* FLAGS */
+  .flags-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .flag-col {
+    padding: 1.5rem;
+  }
+  .flag-col.red { background: #fff5f3; border-top: 3px solid var(--red); color: #5a1a0a; }
+  .flag-col.green { background: #f3fff8; border-top: 3px solid var(--green); color: #0d3d22; }
+  .flag-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .flag-col.red h4 { color: var(--red); }
+  .flag-col.green h4 { color: var(--green); }
+  .flag-item {
+    font-size: 0.82rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    line-height: 1.5;
+  }
+  .flag-item:last-child { border-bottom: none; }
+  .flag-icon { font-size: 0.75rem; }
+
+  /* JOBSEEKER */
+  .jobseeker-section {
+    border: 2px dashed var(--accent2);
+    padding: 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .jobseeker-section::before {
+    content: '求職者角度';
+    position: absolute;
+    top: -0.8rem;
+    left: 1.5rem;
+    background: var(--paper);
+    padding: 0 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent2);
+    text-transform: uppercase;
+  }
+  .checklist {
+    list-style: none;
+    margin: 1rem 0;
+  }
+  .checklist li {
+    padding: 0.7rem 0.5rem 0.7rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.88rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .checklist li strong {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    color: var(--accent2);
+    margin-bottom: 0.2rem;
+  }
+
+  .fishing-box {
+    background: #f0eee8;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid var(--accent);
+  }
+  .fishing-box h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .fish-q {
+    font-family: 'Noto Serif TC', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    padding: 0.8rem 1rem;
+    background: white;
+    border-left: 3px solid var(--accent);
+    margin: 0.8rem 0;
+  }
+  .fish-results {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+  .fish-results span { color: var(--ink); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    border-top: 3px double var(--ink);
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    line-height: 2;
+  }
+
+  /* TOC */
+  .toc {
+    max-width: 860px;
+    margin: 0 auto 0;
+    padding: 0 2rem;
+  }
+  .toc-inner {
+    border: 1.5px solid var(--ink);
+    background: white;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .toc-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.7rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .toc-header span:last-child { color: var(--highlight); font-size: 0.6rem; }
+  .toc-list { list-style: none; padding: 0.5rem 0; }
+  .toc-list li { border-bottom: 1px solid var(--rule); }
+  .toc-list li:last-child { border-bottom: none; }
+  .toc-list a {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: start;
+    gap: 0.8rem;
+    padding: 0.85rem 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s;
+  }
+  .toc-list a:hover { background: var(--paper); }
+  .toc-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding-top: 0.18rem;
+  }
+  .toc-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.2rem;
+  }
+  .toc-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .toc-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    padding-top: 0.22rem;
+  }
+
+  /* SCROLL REVEAL */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    h1 { font-size: 1.8rem; }
+    .dim-grid { grid-template-columns: 1fr; }
+    .flags-grid { grid-template-columns: 1fr; }
+    .masthead-top { font-size: 0.55rem; }
+    .compare-table { font-size: 0.78rem; }
+    .quick-ref { padding: 1.5rem; }
+    .hero { padding: 2rem 1.5rem; }
+    .layout { padding: 0 1.5rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <span>求職田野筆記 × Vault 知識融合</span>
+    <span>2026.04.06</span>
+    <span>閱讀時間 · 10分鐘</span>
+  </div>
+  <div class="site-name">AI協作能力評估框架</div>
+</header>
+
+<div class="hero">
+  <div class="kicker">職場觀察 / 非工程師職能</div>
+  <h1>雇主如何判斷員工能否與AI協作——<em>五個</em>可觀察的現場訊號</h1>
+  <div class="hero-meta">
+    <span>適用對象：行銷・PM・業務・客服・營運</span>
+    <span>來源：4篇田野筆記合成</span>
+    <span>框架：2維度 × 5訊號</span>
+  </div>
+</div>
+
+<div class="lede-box">
+  <p>大多數雇主不知道怎麼具體問AI能力，結果要嘛用大buzzword敷衍（「了解AI」、「熟悉ChatGPT」），要嘛只問「你用過哪些工具」。<strong>真正的AI適應力不在工具清單裡</strong>，而藏在五個日常行為模式裡——本文告訴你如何在面試和日常工作觀察中看見它們。</p>
+</div>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <div class="toc-header">
+      <span>目錄 · Contents</span>
+      <span>共 8 個段落</span>
+    </div>
+    <ul class="toc-list">
+      <li><a href="javascript:void(0)" data-target="intro"><span class="toc-num">前言</span><span><div class="toc-title">為什麼大部分雇主問不到</div><div class="toc-desc">企業用面試搜集答案的諷刺現象，以及本文的解法：可觀察行為訊號 vs 可以背稿的能力宣稱</div></span><span class="toc-tag">框架說明</span></a></li>
+      <li><a href="javascript:void(0)" data-target="signal1"><span class="toc-num">訊號 01</span><span><div class="toc-title">「選工具的邏輯」vs「用哪個工具」</div><div class="toc-desc">能說出換工具原因的人，才真正理解AI工具的功能差異；問「上次你放棄哪個工具，為什麼」比問清單更有效</div></span><span class="toc-tag">工具判斷力</span></a></li>
+      <li><a href="javascript:void(0)" data-target="signal2"><span class="toc-num">訊號 02</span><span><div class="toc-title">「結果導向」vs「任務導向」的AI使用</div><div class="toc-desc">高AI適應力的人描述的是「流程的改變」，而不只是「用了某個工具」——要問前後差異，不是工具清單</div></span><span class="toc-tag">成果思維</span></a></li>
+      <li><a href="javascript:void(0)" data-target="signal3"><span class="toc-num">訊號 03</span><span><div class="toc-title">「指令精確度」的日常版本</div><div class="toc-desc">給一個模糊任務觀察反應：會先拆解、釐清需求的人，才真正懂得和AI協作——Agent不擅長填空</div></span><span class="toc-tag">規範精確性</span></a></li>
+      <li><a href="javascript:void(0)" data-target="signal4"><span class="toc-num">訊號 04</span><span><div class="toc-title">面對AI錯誤輸出時的反應</div><div class="toc-desc">AI的失敗模式是「自信但錯誤」；能建立驗證習慣、而不是說「AI不靠譜」的人才有真正的判斷力</div></span><span class="toc-tag">錯誤識別</span></a></li>
+      <li><a href="javascript:void(0)" data-target="signal5"><span class="toc-num">訊號 05</span><span><div class="toc-title">「AI評估框架」是否存在於日常決策</div><div class="toc-desc">會問「值不值得建」而不只是「能不能建」的人，能把成本與風險納入AI工具的採用判斷</div></span><span class="toc-tag">評估思維</span></a></li>
+      <li><a href="javascript:void(0)" data-target="org"><span class="toc-num">延伸</span><span><div class="toc-title">組織層面的AI適應力判斷</div><div class="toc-desc">從決策文化與「AI優先 vs AI附加」的角度，評估整個組織的AI成熟度</div></span><span class="toc-tag">組織訊號</span></a></li>
+      <li><a href="javascript:void(0)" data-target="quickref"><span class="toc-num">速查</span><span><div class="toc-title">速查表 + 求職者角度</div><div class="toc-desc">面試問題清單、紅旗綠旗對照、求職自我檢核，以及探測雇主AI文化的釣魚公式</div></span><span class="toc-tag">實用工具</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- INTRO -->
+  <section class="section" id="intro">
+    <div class="intro-text">
+      <p>分析了數百個AI職缺後，研究者發現一個諷刺現象：</p>
+      <blockquote>「許多企業並不完全了解他們需要什麼AI能力，反而把招聘流程當作<strong>學習工具</strong>——他們在面試候選人的同時，在從候選人身上搜集答案。」</blockquote>
+      <p>問題有兩層：<strong>表層</strong>是雇主問不出好問題；<strong>深層</strong>是即使員工說「我很熟悉AI」，雇主也沒有能力驗證。本文給雇主<em>可觀察的行為訊號</em>，而不是可以被背稿的能力宣稱。</p>
+    </div>
+
+    <div class="dimension-box">
+      <h3>訊號框架：兩個維度，五個訊號</h3>
+      <div class="dim-grid">
+        <div class="dim-item">
+          <h4>維度一：工具使用的深度</h4>
+          <p>他是「用AI」還是「和AI工作」？<br>他選工具的邏輯是什麼？</p>
+        </div>
+        <div class="dim-item">
+          <h4>維度二：對AI輸出的態度</h4>
+          <p>他如何判斷AI說的對不對？<br>AI出問題時他怎麼反應？</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNAL 1 -->
+  <section class="section" id="signal1">
+    <div class="signal-num"><span>01</span> 訊號一</div>
+    <h2>「選工具的邏輯」vs「用哪個工具」</h2>
+    <p class="section-sub">TOOL SELECTION LOGIC</p>
+
+    <div class="observe-box">
+      <strong>觀察方式</strong>
+      <p>不問「你用過哪些AI工具」，而是問：「上次你換掉一個AI工具（或放棄用某個工具），是因為什麼？」</p>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>⚠ 低AI適應力</th>
+          <th>✓ 高AI適應力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>「因為想試試別的」</td>
+          <td>「因為這個任務要處理大量文件，Claude的長上下文比較適合；但日常對話我還是用ChatGPT，比較快」</td>
+        </tr>
+        <tr>
+          <td>「朋友推薦我用Perplexity」</td>
+          <td>「我發現這個工具在這類任務上老是做錯，改用另一個之後錯誤率明顯降低」</td>
+        </tr>
+        <tr>
+          <td>說不出換掉的原因</td>
+          <td>能說出「這個工具在哪個場景的表現讓我不滿意」</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="why-box">
+      <p>AI職缺中最常出現的技能是「<strong>評估與品質判斷</strong>」——能夠識別AI何時「自信但錯誤」。選工具的邏輯，正是這個能力的日常版本。</p>
+      <p>反面案例：老闆拒絕員工推薦Claude，理由是「另一個更好用」——這是<strong>個人偏好取代工作需求</strong>的典型訊號，說明對AI工具的判斷力基於感覺而非功能評估。</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- SIGNAL 2 -->
+  <section class="section" id="signal2">
+    <div class="signal-num"><span>02</span> 訊號二</div>
+    <h2>「結果導向」vs「任務導向」的AI使用</h2>
+    <p class="section-sub">OUTCOME VS TASK ORIENTATION</p>
+
+    <div class="observe-box">
+      <strong>觀察方式</strong>
+      <p>不問「你用AI做什麼工作」，而是問：「你最近有沒有靠AI讓某件以前要花很長時間的事，現在快很多？你是怎麼做到的？」</p>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>⚠ 低AI適應力</th>
+          <th>✓ 高AI適應力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>「我用AI寫文案，省了大概20分鐘」</td>
+          <td>「我把整個月報的資料格式標準化之後，現在讓AI直接生成初稿，整個流程從三小時縮到40分鐘，而且一致性比以前好」</td>
+        </tr>
+        <tr>
+          <td>聚焦在「用了AI這個工具」</td>
+          <td>聚焦在「重新設計了一個流程，AI是其中一個環節」</td>
+        </tr>
+        <tr>
+          <td>說不出具體節省了多少</td>
+          <td>能描述「之前」和「之後」的差異</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="why-box">
+      <em>「領導者只在乎工作成果，不在乎任務數量。專注成果的人保有工作，專注任務的人容易被取代——因為任務本身可以被AI或外包替代。」</em>
+      <p>能描述「流程改變」而不只是「工具使用」的員工，是把AI當成<strong>系統設計工具</strong>，而不只是打字快一點的助手。</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- SIGNAL 3 -->
+  <section class="section" id="signal3">
+    <div class="signal-num"><span>03</span> 訊號三</div>
+    <h2>「指令精確度」的日常版本</h2>
+    <p class="section-sub">SPECIFICATION PRECISION</p>
+
+    <div class="observe-box">
+      <strong>觀察方式</strong>
+      <p>給一個模糊任務，看他的反應：「幫我用AI整理一下最近的競品資訊」——然後觀察他怎麼開始。</p>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>⚠ 低AI適應力</th>
+          <th>✓ 高AI適應力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>直接打進去，貼上結果</td>
+          <td>先問「你說的競品是哪幾家？你想看的維度是什麼（功能/定價/行銷策略）？輸出要給誰看？」</td>
+        </tr>
+        <tr>
+          <td>拿到模糊任務就直接執行</td>
+          <td>先把任務分解，再交給AI逐步執行</td>
+        </tr>
+        <tr>
+          <td>輸出結果跟預期落差大，說「AI不好用」</td>
+          <td>輸出結果不對，先檢查是不是自己的指令有問題</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="why-box">
+      <p>核心AI技能「<strong>規範精確性（Specification Precision）</strong>」：</p>
+      <em>「你必須學會用機器會字面理解的方式說話。我們習慣與會在行間閱讀的人類合作，但AI做不到這件事。Agent不擅長填空。」</em>
+      <p>這個能力不需要工程背景——技術文件撰寫者、律師、QA工程師都天然具備類似的思維方式。雇主可以在<strong>日常工作指派</strong>中觀察到它。</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- SIGNAL 4 -->
+  <section class="section" id="signal4">
+    <div class="signal-num"><span>04</span> 訊號四</div>
+    <h2>面對AI錯誤輸出時的反應</h2>
+    <p class="section-sub">ERROR RESPONSE & VERIFICATION HABITS</p>
+
+    <div class="observe-box">
+      <strong>觀察方式</strong>
+      <p>問：「你有沒有發生過一次，你把AI的輸出直接用了，後來發現有問題的經驗？後來你做了什麼改變？」</p>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>⚠ 低AI適應力</th>
+          <th>✓ 高AI適應力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>「AI說的看起來對，我覺得OK就交出去了」</td>
+          <td>「AI說的資料聽起來很有說服力，但我不確定數字的來源，花了一點時間查，果然不對——現在我會把有數字的部分設定成一定要驗證」</td>
+        </tr>
+        <tr>
+          <td>認為「AI說的 = 流暢的 = 正確的」</td>
+          <td>知道AI會「自信但錯誤」，建立自己的驗證習慣</td>
+        </tr>
+        <tr>
+          <td>出問題時說「AI不靠譜」</td>
+          <td>出問題時問「我的工作流程哪個環節沒有驗證機制」</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="why-box">
+      <em>「AI獨特的失敗模式是：它輸出的是自信而錯誤的結果，而不是人類犯錯時那種支支吾吾。如果你不習慣這個失敗模式，你會把流暢的格式誤讀為品質保證。」</em>
+      <p>這是非工程師能力中，雇主最容易忽略但<strong>最重要的AI判斷能力</strong>。</p>
+    </div>
+  </section>
+
+  <div class="divider">· · ·</div>
+
+  <!-- SIGNAL 5 -->
+  <section class="section" id="signal5">
+    <div class="signal-num"><span>05</span> 訊號五</div>
+    <h2>「AI評估框架」是否存在於日常決策</h2>
+    <p class="section-sub">COST-BENEFIT EVALUATION FRAMEWORK</p>
+
+    <div class="observe-box">
+      <strong>觀察方式</strong>
+      <p>問：「如果主管說要引進一個新的AI工具，你會怎麼評估值不值得用？」</p>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>⚠ 低AI適應力</th>
+          <th>✓ 高AI適應力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>「試試看，如果好用就繼續用」</td>
+          <td>「先看這個工具要解決什麼任務，這個任務現在佔多少時間，AI如果做錯的後果是什麼，以及如果要維護這個工具需要多少人工」</td>
+        </tr>
+        <tr>
+          <td>以感覺或話題熱度決定採用</td>
+          <td>有評估框架，即使說不出專業術語</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="why-box">
+      <em>「這基本上只是應用數學——但你因為能夠在快速變動的世界中把這些數學應用在成本計算上，你就能得到像資深架構師一樣的薪資。」</em>
+      <p>即使是一般行銷人員，也應該能在「要不要花時間設定這個AI工作流」的判斷上展現這種<strong>取捨思維</strong>。</p>
+    </div>
+  </section>
+
+  <!-- ORG SIGNALS -->
+  <section class="section" id="org">
+    <div class="divider">延伸訊號</div>
+    <h2 style="text-align:center; margin-bottom: 1.5rem;">組織層面的AI適應力判斷</h2>
+
+    <div class="org-section">
+      <h3><span class="org-badge">訊號 A</span> 決策是「工具評估」還是「個人喜好壓倒建議」？</h3>
+      <p style="font-size:0.88rem; line-height:1.8; margin-bottom:1rem;">典型案例：員工推薦某工具 → 老闆說「另一個更好用」（個人使用感受）→ 一年後公司拿同一個工具當行銷素材。這個「封閉式決策」的症狀是：<strong>員工的AI使用觀察被當成個人意見拒絕，而不是市場訊號對待。</strong></p>
+      <p style="font-size:0.82rem; color: var(--muted);">雇主自我檢視：你最近有沒有拒絕員工推薦的AI工具？你的理由是什麼？你對「我試過，感覺不好用」和「這個對我們的業務流程不划算」有沒有做區分？</p>
+    </div>
+
+    <div class="org-section">
+      <h3><span class="org-badge" style="background:var(--green);">訊號 B</span> 「AI優先」還是「AI附加」？</h3>
+      <p style="font-size:0.88rem; line-height:1.8;">一個組織的AI文化，可以從「AI是先考慮的選項，還是最後才想到的補充」看出差異。成為組織中的AI大師，你會被注意到——這就是工作保障。</p>
+    </div>
+  </section>
+
+  <!-- QUICK REF -->
+  <section class="section" id="quickref">
+    <div class="quick-ref">
+      <h2>📋 速查表</h2>
+
+      <div class="section-label">面試中可以問的題目</div>
+      <table>
+        <thead>
+          <tr>
+            <th>目的</th>
+            <th>建議問法</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>測工具選擇邏輯</td>
+            <td>「上次你換掉或放棄一個AI工具，是因為什麼？」</td>
+          </tr>
+          <tr>
+            <td>測結果導向程度</td>
+            <td>「你最近有沒有靠AI讓某件事大幅提速？你是怎麼設計這個流程的？」</td>
+          </tr>
+          <tr>
+            <td>測錯誤容忍與驗證習慣</td>
+            <td>「有沒有一次AI輸出看起來對但其實不對，你之後怎麼改變的？」</td>
+          </tr>
+          <tr>
+            <td>測指令精確度</td>
+            <td>給一個模糊任務，觀察他怎麼拆解，不要給他解釋太多</td>
+          </tr>
+          <tr>
+            <td>測評估框架</td>
+            <td>「如果要引進一個新AI工具，你會怎麼判斷值不值得？」</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flags-grid">
+        <div class="flag-col red">
+          <h4>🚩 日常觀察紅旗</h4>
+          <div class="flag-item"><span class="flag-icon">●</span><span>AI輸出拿來就用，沒有核對</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>對不同任務都用同一個AI工具</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>AI出錯時說「AI不靠譜」</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>說的AI使用跟實際業務成果脫鉤</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>對AI工具評估沒有成本或風險考量</span></div>
+        </div>
+        <div class="flag-col green">
+          <h4>✅ 日常觀察綠旗</h4>
+          <div class="flag-item"><span class="flag-icon">●</span><span>不同任務選不同工具，能說出理由</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>把AI問題描述為「我的流程設計問題」</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>主動分享AI讓某個流程改變的具體案例</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>問「這個值不值得建」而不只是「能不能建」</span></div>
+          <div class="flag-item"><span class="flag-icon">●</span><span>推薦工具時能說出「在這種場景不適用」</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOBSEEKER -->
+  <section class="section">
+    <div class="jobseeker-section">
+      <h2 style="font-size:1.3rem; margin-bottom:0.5rem;">🎯 對求職者的使用說明</h2>
+      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem;">這個框架可以反過來用：你的AI協作能力，正被以這五個訊號評估。</p>
+
+      <h3 style="font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent2); margin-bottom:0.8rem;">面試前的自我檢核</h3>
+      <ul class="checklist">
+        <li data-num="01"><strong>工具選擇邏輯</strong>準備一個你換工具的理由，要說出是「哪個任務場景讓你換的」</li>
+        <li data-num="02"><strong>結果導向</strong>準備一個「流程改變前/後」的具體差異，要有數字</li>
+        <li data-num="03"><strong>指令精確度</strong>準備一個你把任務用AI完成的例子，重點在你「怎麼設計prompt」</li>
+        <li data-num="04"><strong>錯誤處理</strong>準備一個AI出錯的例子，重點在你怎麼調整，不是抱怨AI</li>
+        <li data-num="05"><strong>評估框架</strong>準備一次你說「不值得用AI做這件事」的例子（有取捨思維比總是說AI好更可信）</li>
+      </ul>
+
+      <div class="fishing-box">
+        <h4>🎣 釣魚公式：探測雇主的AI成熟度</h4>
+        <p style="font-size:0.82rem; margin-bottom:0.8rem;">在面試中用略偏的解讀釣出雇主真實情況：</p>
+        <div class="fish-q">「我看你們在行銷上好像有用一些AI工具輔助，感覺大多是在文案生成這塊吧？還是有其他地方也在用？」</div>
+        <div class="fish-results">
+          → 「對，主要就是文案」：<span>AI導入比較表面</span><br>
+          → 「不只，我們在XX流程也有建立...」：<span>公司有更深的AI使用</span>
+        </div>
+        <div class="fish-q" style="margin-top:1rem;">「你們有沒有員工提過AI工具或工作流程的建議，後來真的有被採用的例子？」</div>
+        <div class="fish-results">
+          → 有具體例子：<span>決策文化開放</span><br>
+          → 猶豫或說不出：<span>從下而上的路徑可能不順暢</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>求職田野筆記 × Vault 知識融合系統 · 深度合成</p>
+  <p>來源筆記：4篇 · 框架：2維度 × 5訊號 · 2026-04-06</p>
+  <p>適用對象：非工程師職能的雇主判斷 × 求職者自我準備</p>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+
+  // Add animate class to all sections
+  sections.forEach(s => s.classList.add('animate'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.remove('animate');
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.05 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // TOC clicks: use data-target, make visible then scroll
+  document.querySelectorAll('.toc-list a[data-target]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.getElementById(this.dataset.target);
+      if (target) {
+        target.classList.remove('animate');
+        target.classList.add('visible');
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 20);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
